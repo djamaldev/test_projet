@@ -106,8 +106,8 @@ extension HomePage: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         cell.decTextView.text = self.desc[indexPath.item]
         //cell.ImageView.image = UIImage(named: "im")
         cell.ImageView.image = UIImage.init(named: (self.imageUrl[indexPath.item]) )
-        //cell.ImageView.contentMode = .scaleAspectFill
-        //cell.clipsToBounds = true
+        cell.ImageView.contentMode = .scaleAspectFill
+        cell.clipsToBounds = true
         
         return cell
     }
