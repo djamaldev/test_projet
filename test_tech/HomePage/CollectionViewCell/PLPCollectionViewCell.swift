@@ -18,12 +18,5 @@ class PLPCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    
-    func Update(Prod: Product){
-        self.ImageView.image = UIImage(named: Prod.images_url?.small ?? "")
-        self.titleLbl.text = Prod.product_name
-        self.priceLbl.text = String(Prod.price ?? 0)
-        self.decTextView.text = Prod.description
-     }
 
 }

@@ -20,7 +20,6 @@ class HomePage: UIViewController{
     var product: [Product] = []
     private var dataTask: URLSessionDataTask?
     lazy var session: URLSession = {
-        print(URLCache.shared.memoryCapacity)
         let configuration = URLSessionConfiguration.default
         configuration.requestCachePolicy = .returnCacheDataElseLoad
         return URLSession(configuration: configuration)
@@ -33,7 +32,7 @@ class HomePage: UIViewController{
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         collectionView.register(UINib(nibName: "PLPCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "Cell")
-        self.getSpecialData()
+        self.getSpecialData(session: session)
         self.getData(session: session)
     }
     
@@ -64,9 +63,9 @@ class HomePage: UIViewController{
         
     }
     
-    func getSpecialData() {
+    func getSpecialData(session: URLSession) {
         if let url = URL(string: "https://sephoraios.github.io/items.json") {
-            URLSession.shared.dataTask(with: url) { [self] data, response, error in
+            let dataTask = session.dataTask(with: url) { [self] data, response, error in
               if let data = data {
                   do {
                     let res = try JSONDecoder().decode([Product].self, from: data)
@@ -84,14 +83,13 @@ class HomePage: UIViewController{
                      print(error)
                   }
                }
-           }.resume()
+           }
+            dataTask.resume()
+            self.dataTask = dataTask
         }
         
     }
     
-    func getCachedData() {
-        
-    }
     
     
 }
@@ -100,9 +98,6 @@ extension HomePage: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         product.count
     }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PLPCollectionViewCell
@@ -110,7 +105,7 @@ extension HomePage: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         cell.titleLbl.text = self.titleProduct[indexPath.item]
         cell.decTextView.text = self.desc[indexPath.item]
         //cell.ImageView.image = UIImage(named: "im")
-        //cell.ImageView.image = UIImage.init(named: (self.imageUrl[indexPath.item]) )
+        cell.ImageView.image = UIImage.init(named: (self.imageUrl[indexPath.item]) )
         //cell.ImageView.contentMode = .scaleAspectFill
         //cell.clipsToBounds = true
         
