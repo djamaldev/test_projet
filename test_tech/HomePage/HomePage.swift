@@ -101,7 +101,7 @@ extension HomePage: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PLPCollectionViewCell
-        cell.priceLbl.text = String(((self.price[indexPath.item])))
+        cell.priceLbl.text = "\(String(((self.price[indexPath.item]))))$"
         cell.titleLbl.text = self.titleProduct[indexPath.item]
         cell.decTextView.text = self.desc[indexPath.item]
         //cell.ImageView.image = UIImage(named: "im")
@@ -113,6 +113,6 @@ extension HomePage: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     }
     
 func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 120, height: 350)
+    return CGSize(width: 200, height: 350)
 }
 }
