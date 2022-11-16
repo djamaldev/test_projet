@@ -12,6 +12,7 @@ import Foundation
 
 class HomePage: UIViewController{
     
+    let get_url = "\(baseUrl)/\(get)"
     var titleProduct: [String] = []
     var price: [Int] = []
     var desc: [String] = []
@@ -37,7 +38,7 @@ class HomePage: UIViewController{
     }
     
     func getData(session: URLSession) {
-        if let url = URL(string: "https://sephoraios.github.io/items.json") {
+        if let url = URL(string: get_url) {
             let dataTask = session.dataTask(with: url) { [self] data, response, error in
               if let data = data {
                   do {
@@ -64,7 +65,7 @@ class HomePage: UIViewController{
     }
     
     func getSpecialData(session: URLSession) {
-        if let url = URL(string: "https://sephoraios.github.io/items.json") {
+        if let url = URL(string: get_url) {
             let dataTask = session.dataTask(with: url) { [self] data, response, error in
               if let data = data {
                   do {
